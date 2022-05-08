@@ -37,3 +37,14 @@ def generate_number(item):
         return f'{ff.pyint()}'
 
 
+def generate_string(item):
+    if 'from' in item and 'to' in item:
+        try:
+            start_num, end_num = int(item['from']), int(item['to'])
+            return ff.pystr(min_chars=start_num, max_chars=end_num)
+        except ValueError:
+            print(f'Unable to parse integer for {item["name"]} ==> "from" or "to" values')
+            sys.exit(1)
+    else:
+        return ff.pystr()
+

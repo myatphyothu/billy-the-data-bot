@@ -1,7 +1,7 @@
 import os, sys, random, datetime
 import argparse, json
 from faker import Faker
-from utils import generate_date, generate_number
+from utils import generate_date, generate_number, generate_string
 
 
 def get_cli_args():
@@ -68,24 +68,43 @@ def generate_output(filename, delimiter, rows, column_data_list):
                 data = random.choice(consider_only)
             else:
                 consider = item['consider'] if 'consider' in item else []
+                rand_x = random.choice([0, 1])
                 # generate name
                 if item['type'] == 'f_name':
-                    data = (ff.name() if random.choice([0, 1]) == 0 else random.choice(consider)) if len(consider) > 0 else ff.name()
+                    data = (ff.name() if rand_x == 0 else random.choice(consider)) if len(consider) > 0 else ff.name()
 
                 elif item['type'] == 'f_date':
-                    data = (generate_date(item) if random.choice([0, 1]) == 0 else random.choice(consider)) if len(consider) > 0 else generate_date(item)
+                    data = (generate_date(item) if rand_x == 0 else random.choice(consider)) if len(consider) > 0 else generate_date(item)
 
                 elif item['type'] == 'f_address':
-                    data = (ff.address() if random.choice([0, 1]) == 0 else random.choice(consider)) if len(consider) > 0 else ff.address()
+                    data = (ff.address() if rand_x == 0 else random.choice(consider)) if len(consider) > 0 else ff.address()
 
                 elif item['type'] == 'f_phonenumber':
-                    data = (ff.phone_number() if random.choice([0, 1]) == 0 else random.choice(consider)) if len(consider) > 0 else ff.phone_number()
+                    data = (ff.phone_number() if rand_x == 0 else random.choice(consider)) if len(consider) > 0 else ff.phone_number()
 
                 elif item['type'] == 'f_job':
-                    data = (ff.job() if random.choice([0, 1]) == 0 else random.choice(consider)) if len(consider) > 0 else ff.job()
+                    data = (ff.job() if rand_x == 0 else random.choice(consider)) if len(consider) > 0 else ff.job()
 
                 elif item['type'] == 'f_number':
-                    data = (generate_number(item) if random.choice([0, 1]) == 0 else random.choice(consider)) if len(consider) > 0 else generate_number(item)
+                    data = (generate_number(item) if rand_x == 0 else random.choice(consider)) if len(consider) > 0 else generate_number(item)
+
+                elif item['type'] == 'f_str':
+                    data = (generate_string(item) if rand_x == 0 else random.choice(consider)) if len(consider) > 0 else generate_string(item)
+
+                elif item['type'] == 'f_ssn':
+                    data = (ff.ssn() if rand_x == 0 else random.choice(consider)) if len(consider) > 0 else ff.ssn()
+
+                elif item['type'] == 'f_cc_num':
+                    data = (ff.credit_card_number() if rand_x == 0 else random.choice(consider)) if len(consider) > 0 else ff.credit_card_number()
+
+                elif item['type'] == 'f_company':
+                    data = (ff.company() if rand_x == 0 else random.choice(consider)) if len(consider) > 0 else ff.company()
+
+                elif item['type'] == 'f_email':
+                    data = (ff.ascii_email() if rand_x == 0 else random.choice(consider)) if len(consider) > 0 else ff.ascii_email()
+
+                else:
+                    data = (generate_string(item) if rand_x == 0 else random.choice(consider)) if len(consider) > 0 else generate_string(item)
 
 
             if data:
