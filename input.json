@@ -1,0 +1,30 @@
+{
+  "output file": "test.csv",
+  "sample size": 10,
+  "delimiter": ",",
+  "cols": [
+    {
+      "name": "Name",
+      "type": "f_name",
+      "consider": ["Harry Potter", "Mary Jane", "Ginger Ale", "Ronald Heathen"]
+    },
+    {
+      "name": "Date of Birth",
+      "type": "f_date",
+      "from": "1980-01-01",
+      "to": "2000-12-30"
+    },
+    {
+      "name": "Address",
+      "type": "f_address"
+    },
+    {
+      "name": "Contact",
+      "type": "f_phonenumber"
+    },
+    {
+      "name": "Profession",
+      "type": "f_job"
+    }
+  ]
+}
