@@ -25,6 +25,12 @@
     {
       "name": "Profession",
       "type": "f_job"
+    },
+    {
+      "name": "N1",
+      "type": "f_number",
+      "from": "1",
+      "to": "10"
     }
   ]
 }

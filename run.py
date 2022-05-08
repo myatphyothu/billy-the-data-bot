@@ -1,6 +1,7 @@
 import os, sys, random, datetime
 import argparse, json
 from faker import Faker
+from utils import generate_date, generate_number
 
 
 def get_cli_args():
@@ -14,13 +15,6 @@ def check_missing_keys(*expected_keys, provided_keys):
         if key not in provided_keys:
             return True, key
     return False, None
-
-
-def str_to_date(str_date):
-    xx_list = str_date.split('-')
-    d_year, d_month, d_day = int(xx_list[0]), int(xx_list[1]), int(xx_list[2])
-    return datetime.date(d_year, d_month, d_day)
-
 
 
 def validate_input_data(input):
@@ -54,20 +48,6 @@ def validate_input_data(input):
 
 def generate_output(filename, delimiter, rows, column_data_list):
     # print(filename, delimiter, rows)
-
-    def generate_date(item):
-        if 'from' in item and 'to' in item:
-            start_date_str, end_date_str = item['from'], item['to']
-
-            # ToDo: validate start_date, end_date
-            # validate(start_date_str, end_date_str)
-
-            start_date, end_date = str_to_date(start_date_str), str_to_date(end_date_str)
-            data = f'{ff.date_between_dates(start_date, end_date)}'
-        else:
-            data = f'{ff.date()}'
-
-        return data
 
     ff = Faker()
     Faker.seed(0)
@@ -103,6 +83,10 @@ def generate_output(filename, delimiter, rows, column_data_list):
 
                 elif item['type'] == 'f_job':
                     data = (ff.job() if random.choice([0, 1]) == 0 else random.choice(consider)) if len(consider) > 0 else ff.job()
+
+                elif item['type'] == 'f_number':
+                    data = (generate_number(item) if random.choice([0, 1]) == 0 else random.choice(consider)) if len(consider) > 0 else generate_number(item)
+
 
             if data:
                 data = data.replace('\n', ' ').replace('\r', ' ').replace(',', ' ')
